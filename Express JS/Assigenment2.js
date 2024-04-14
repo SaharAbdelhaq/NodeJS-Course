@@ -12,11 +12,11 @@ app.listen(8080);
 //   res.send("hi from second route");
 // });
 
-app.use("/", (req, res, next) => {
-  console.log("hello");
-  next();
+app.use("/users", (req, res, next) => {
+  res.send("hi user from users route");
 });
 
-app.use("/users", (req, res, next) => {
-  res.send("hi user from second route");
+app.use("/", (req, res, next) => {
+  res.send("hi user from / route");
+  console.log("hello");
 });
