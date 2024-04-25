@@ -1,14 +1,14 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes");
+const { mongoConnect } = require("./db");
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use("/api", userRoutes);
+app.use(userRoutes);
 
-const PORT = 3000;
+const PORT = 5500;
 
-app.listen(PORT, () => {
-  console.log(`listening on port${PORT}`);
+mongoConnect((client) => {
+  app.listen(PORT);
 });

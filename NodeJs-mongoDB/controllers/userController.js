@@ -1,14 +1,18 @@
-const userModel = require("../models/userModel");
+const User = require("../models/userModel");
 
-async function createUser(req, res) {
-  const userData = req.body;
-  try {
-    const user = await userModel.createUser(userData);
-    res.status(201).json(user);
-  } catch (err) {
-    console("Error creating user" + err);
-    throw err;
-  }
-}
+exports.createUser = (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
 
-module.exports = createUser;
+  const user = new User(username, password);
+  user
+    .save()
+    .then((result) => {
+      console.log(result);
+      console.log("user created");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

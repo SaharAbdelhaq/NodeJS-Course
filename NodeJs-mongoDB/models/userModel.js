@@ -1,15 +1,22 @@
-const { connecetToDatabase } = require("../db");
+const { getdb } = require("../db");
 
-async function createUser(userData) {
-  try {
-    const database = await connecetToDatabase();
-    const collection = database.collection("users");
-    const result = await collection.insertOne(userData);
-    return result.ops[0]; // ops stands for operations , and here we return an array that accessed the first element which is the nwely user created
-  } catch (error) {
-    console.log("Error creating user " + error);
-    throw error;
+class User {
+  constructor(username, password) {
+    this.username = username;
+    this.password = password;
+  }
+  save() {
+    const db = getdb();
+    return db
+      .collection("users")
+      .insertOne(this)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
-module.exports = { createUser };
+module.exports = User;
