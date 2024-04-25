@@ -1,24 +1,22 @@
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
-let _db;
+const { MongoClient } = require("mongodb");
 
-exports.mongoConnect = (callback) => {
-  MongoClient.connect(
-    "mongodb+srv://AbdallahDereia:JLiq00ZXmUOuNl4v@cluster0.7ok67.mongodb.net/NodeJs_Course?retryWrites=true&w=majority"
-  )
-    .then((client) => {
-      console.log("Connected");
-      _db = client.db();
-      callback(client);
-    })
-    .catch((err) => {
-      console.error(err);
+const uri = "mongodb://localhost:27017";
+const dbName = "testing-db";
+
+async function connecetToDatabase() {
+  try {
+    const client = new MongoClient(uri, {
+      userNewUrlParser: true,
+      useUndefiedTopology: true,
     });
-};
-
-exports.getdb = () => {
-  if (_db) {
-    return _db;
+    await client.connect();
+    console.log("connected to MongoDB");
+    const database = client.db(dbName);
+    return database;
+  } catch (e) {
+    console.log("error connecting to MongoDB");
+    throw e;
   }
-  throw "no DB";
-};
+}
+
+module.exports = connecetToDatabase;
