@@ -51,7 +51,7 @@ exports.updateUser = (req, res) => {
   };
   User.update(_id, updatedUser);
 
-  return res.status(204).json({
+  return res.status(201).json({
     message: "success",
   });
 };
