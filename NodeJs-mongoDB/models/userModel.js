@@ -1,5 +1,4 @@
 const { getdb } = require("../db");
-const { ObjectId } = require("mongodb");
 
 class User {
   constructor(username, password) {
@@ -54,7 +53,7 @@ class User {
     const db = getdb();
     return db.collection("users").deleteOne({ _id: new ObjectId(userId) });
   }
-  //
+
 }
 
 module.exports = User;
