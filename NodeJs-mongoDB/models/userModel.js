@@ -54,6 +54,7 @@ class User {
     const db = getdb();
     return db.collection("users").deleteOne({ _id: new ObjectId(userId) });
   }
+  //
 }
 
 module.exports = User;
